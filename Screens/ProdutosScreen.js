@@ -41,24 +41,24 @@ const ProdutosScreen = ({ route, navigation }) => {
   };
 
   const handleSubmit = async () => {
-    const formData = newFormData();
+    const formData = new FormData();
     formData.append('nome', nome);
     formData.append('descricao', descricao);
     formData.append('quantidade', quantidade);
 
     if (foto) {
       formData.append('foto', {
-        uri: foto.uri, 
-        type: foto.type, 
-        name: foto.fileName || 'photo.jpg', 
+        uri: foto, 
+        type: 'image/jpeg', 
+        name: 'photo.jpg', 
       });
     }
 
     try {
       if (route.params?.produto) {
-        await updateProduto(route.params.produto._id, produto);
+        await updateProduto(route.params.produto._id, formData);
       } else {
-        await createProduto(produto);
+        await createProduto(formData);
       }
       navigation.goBack();
     } catch (error) {
