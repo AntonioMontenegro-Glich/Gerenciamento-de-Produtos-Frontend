@@ -20,27 +20,40 @@ const HomeScreen = () => {
     }
   };
 
-const handleDelete = (id) => {
-  Alert.alert(
-    'Confirmar exclusão',
-    'Você tem certeza que deseja deletar este produto?',
-    [
-      { text: 'Cancelar', style: 'cancel' },
-      {
-        text: 'Deletar',
-        onPress: async () => {
-          try {
-            await deleteProduto(id);
-            fetchProdutos();
-          } catch (error) {
-            Alert.alert('Erro', 'Não foi possível deletar o produto');
-          }
+  const handleDelete = (id) => {
+    Alert.alert(
+      'Confirmar exclusão',
+      'Você tem certeza que deseja deletar este produto?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Deletar',
+          onPress: async () => {
+            try {
+              await deleteProduto(id);
+              fetchProdutos();
+            } catch (error) {
+              Alert.alert('Erro', 'Não foi possível deletar o produto');
+            }
+          },
         },
-      },
-    ]
-  );
-};
+      ]
+    );
+  };
 
+  const confirmEdit = (produto) => {
+    Alert.alert(
+      'Confirmar edição',
+      'Você tem certeza que deseja editar este produto?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Editar',
+          onPress: () => navigation.navigate('ProdutosScreen', { produto }),
+        },
+      ]
+    );
+  };
 
   return (
     <View>
@@ -53,7 +66,7 @@ const handleDelete = (id) => {
             <Text>{item.nome}</Text>
             <Text>{item.descricao}</Text>
             <Text>{item.quantidade}</Text>
-            <Button title="Editar" onPress={() => navigation.navigate('ProdutosScreen', { produto: item })} />
+            <Button title="Editar" onPress={() => confirmEdit(item)} /> 
             <Button title="Deletar" onPress={() => handleDelete(item._id)} />
           </View>
         )}
@@ -63,3 +76,4 @@ const handleDelete = (id) => {
 };
 
 export default HomeScreen;
+
