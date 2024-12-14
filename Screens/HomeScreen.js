@@ -20,14 +20,27 @@ const HomeScreen = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-    try {
-      await deleteProduto(id);
-      fetchProdutos();
-    } catch (error) {
-      Alert.alert('Erro', 'Não foi possível deletar o produto');
-    }
+  const handleDelete = (id) => {
+    Alert.alert(
+      'Confirmar exclusão',
+      'Você tem certeza que deseja deletar este produto?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        {
+          text: 'Deletar',
+          onPress: async () => {
+            try {
+              await deleteProduto(id);
+              fetchProdutos();
+            } catch (error) {
+              Alert.alert('Erro', 'Não foi possível deletar o produto');
+            }
+          },
+        },
+      ]
+    );
   };
+  
 
   return (
     <View>
