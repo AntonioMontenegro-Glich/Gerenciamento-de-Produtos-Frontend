@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Button, Alert } from 'react-native';
+import { View, Text, FlatList, Button, Alert, Image } from 'react-native';
 import { getProdutos, deleteProduto } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
+
 
 const HomeScreen = () => {
   const [produtos, setProdutos] = useState([]);
