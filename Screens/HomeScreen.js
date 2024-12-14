@@ -66,6 +66,12 @@ const HomeScreen = () => {
             <Text>{item.nome}</Text>
             <Text>{item.descricao}</Text>
             <Text>{item.quantidade}</Text>
+            {item.foto && (
+              <Image
+                source={{ uri: `${BASE_URL}/uploads/${item.foto}` }} 
+                style={{ width: 100, height: 100 }}
+              />
+            )}
             <Button title="Editar" onPress={() => confirmEdit(item)} /> 
             <Button title="Deletar" onPress={() => handleDelete(item._id)} />
           </View>

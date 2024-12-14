@@ -36,12 +36,23 @@ const ProdutosScreen = ({ route, navigation }) => {
 
     // Verifica se o usuário cancelou ou selecionou uma imagem
     if (!result.canceled) {
-      setFoto(result.assets[0].uri); // Armazena a URI da imagem
+      setFoto(result.assets[0].uri); 
     }
   };
 
   const handleSubmit = async () => {
-    const produto = { nome, descricao, quantidade, foto };
+    const formData = newFormData();
+    formData.append('nome', nome);
+    formData.append('descricao', descricao);
+    formData.append('quantidade', quantidade);
+
+    if (foto) {
+      formData.append('foto', {
+        uri: foto.uri, 
+        type: foto.type, 
+        name: foto.fileName || 'photo.jpg', 
+      });
+    }
 
     try {
       if (route.params?.produto) {
