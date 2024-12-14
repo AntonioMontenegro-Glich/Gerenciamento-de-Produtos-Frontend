@@ -19,7 +19,7 @@ const ProdutosScreen = ({ route, navigation }) => {
   }, [route.params]);
 
   const handleSubmit = async () => {
-    const produto = { nome, descricao, quantidade, foto };
+    const produto = { nome, descricao, quantidade: parseInt(quantidade, 10), foto };
 
     try {
       if (route.params?.produto) {
