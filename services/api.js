@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://gerenciamento-de-produtos-backend.onrender.com/api/produtos', 
+  baseURL: "https://gerenciamento-de-produtos-backend.onrender.com/api/produtos", 
 });
 
 export const getProdutos = async () => {
@@ -16,10 +16,15 @@ export const getProdutos = async () => {
 
 export const createProduto = async (produto) => {
   try {
-    const response = await api.post('/create', produto);
+    const response = await api.post('/create', produto,{
+    headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data;
   } catch (error) {
     console.error('Erro ao cadastrar produto', error);
+    console.log('Body recebido:', req.body);
+    console.log('Arquivo recebido:', req.file);
+    console.log('Campos obrigatórios:', nome, descricao, quantidade);
     throw error;
   }
 };
