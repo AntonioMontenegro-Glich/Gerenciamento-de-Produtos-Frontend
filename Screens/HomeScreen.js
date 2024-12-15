@@ -12,7 +12,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     fetchProdutos();
-  },[]);
+  });
 
   const fetchProdutos = async () => {
     try {
@@ -73,8 +73,9 @@ const HomeScreen = () => {
             <Text>{item.quantidade}</Text>
             {item.foto && (
               <Image
-                source={{ uri: `${baseUrl}/uploads/${item.foto}` }}
-                style={{ width: 100, height: 100 }}
+                source={{ uri: `https://gerenciamento-de-produtos-backend.onrender.com${item.foto}` }}
+                style={{ width: 200, height: 200 }}
+                resizeMode="contain"
               />
             )}
             <Button title="Editar" onPress={() => confirmEdit(item)} /> 

@@ -30,7 +30,7 @@ const ProdutosScreen = ({ route, navigation }) => {
 
     // Abrir a galeria para selecionar uma imagem
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaType.Images, 
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, 
       quality: 1, 
     });
 
@@ -48,7 +48,7 @@ const ProdutosScreen = ({ route, navigation }) => {
 
     if (foto) {
 
-      const localUri = foto.replace('file://', '');
+      const localUri = foto.replace('', '');
       const filename = localUri.split("/").pop();
       const match = /\.(\w+)$/.exec(filename);
       const type = match ? `image/${match[1].toLowerCase()}` : 'image/jpeg';
