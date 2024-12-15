@@ -16,7 +16,7 @@ export const getProdutos = async () => {
 
 export const createProduto = async (produto) => {
   try {
-    const response = await api.post('/', produto);
+    const response = await api.post('/create', produto);
     return response.data;
   } catch (error) {
     console.error('Erro ao cadastrar produto', error);

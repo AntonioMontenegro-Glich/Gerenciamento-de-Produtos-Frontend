@@ -30,8 +30,8 @@ const ProdutosScreen = ({ route, navigation }) => {
 
     // Abrir a galeria para selecionar uma imagem
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Apenas imagens
-      quality: 1, // Qualidade máxima
+      mediaTypes: ImagePicker.MediaType.Images, 
+      quality: 1, 
     });
 
     // Verifica se o usuário cancelou ou selecionou uma imagem
@@ -44,13 +44,20 @@ const ProdutosScreen = ({ route, navigation }) => {
     const formData = new FormData();
     formData.append('nome', nome);
     formData.append('descricao', descricao);
-    formData.append('quantidade', quantidade);
+    formData.append('quantidade', parseInt(quantidade));
 
     if (foto) {
+
+      const localUri = foto.replace('file://', '');
+      const filename = localUri.split("/").pop();
+      const match = /\.(\w+)$/.exec(filename);
+      const type = match ? `image/${match[1].toLowerCase()}` : 'image/jpeg';
+
+
       formData.append('foto', {
-        uri: foto, 
-        type: 'image/jpeg', 
-        name: 'photo.jpg', 
+        uri: localUri, 
+        type,
+        name: filename, 
       });
     }
 
@@ -59,9 +66,11 @@ const ProdutosScreen = ({ route, navigation }) => {
         await updateProduto(route.params.produto._id, formData);
       } else {
         await createProduto(formData);
+        console.log(nome,descricao,quantidade,foto);
       }
       navigation.goBack();
     } catch (error) {
+      console.log(nome,descricao,quantidade,foto);
       Alert.alert('Erro', 'Não foi possível salvar o produto');
     }
   };

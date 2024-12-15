@@ -3,18 +3,22 @@ import { View, Text, FlatList, Button, Alert, Image } from 'react-native';
 import { getProdutos, deleteProduto } from '../services/api';
 import { useNavigation } from '@react-navigation/native';
 
+const baseUrl = "https://gerenciamento-de-produtos-backend.onrender.com/api/produtos"
 
 const HomeScreen = () => {
   const [produtos, setProdutos] = useState([]);
+  const[image, setImage] = useState('')
   const navigation = useNavigation();
 
   useEffect(() => {
     fetchProdutos();
-  });
+  },[]);
 
   const fetchProdutos = async () => {
     try {
       const data = await getProdutos();
+      const imageUrl = `${baseUrl}${data.foto}`;
+      setImage(imageUrl);
       setProdutos(data);
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível carregar os produtos');
@@ -69,7 +73,7 @@ const HomeScreen = () => {
             <Text>{item.quantidade}</Text>
             {item.foto && (
               <Image
-                source={{ uri: `${BASE_URL}/uploads/${item.foto}` }} 
+                source={{ uri: `${baseUrl}/uploads/${item.foto}` }}
                 style={{ width: 100, height: 100 }}
               />
             )}
