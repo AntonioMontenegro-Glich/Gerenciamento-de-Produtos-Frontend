@@ -31,10 +31,12 @@ export const createProduto = async (produto) => {
 
 export const updateProduto = async (id, produto) => {
   try {
-    const response = await api.put(`/${id}`, produto);
+    const response = await api.put(`/${id}`, produto,{
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return response.data;
   } catch (error) {
-    console.error('Erro ao editar produto', error);
+    console.error('Erro ao editar produto', error.response?.data || error.message);
     throw error;
   }
 };

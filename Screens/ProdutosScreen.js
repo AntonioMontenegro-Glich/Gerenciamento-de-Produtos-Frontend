@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Text, Alert, Image } from 'react-native';
-import * as ImagePicker from 'expo-image-picker'; // Importa o seletor de imagens do Expo
+import * as ImagePicker from 'expo-image-picker'; 
 import { createProduto, updateProduto } from '../services/api';
 
 const ProdutosScreen = ({ route, navigation }) => {
@@ -8,10 +8,12 @@ const ProdutosScreen = ({ route, navigation }) => {
   const [descricao, setDescricao] = useState('');
   const [quantidade, setQuantidade] = useState('');
   const [foto, setFoto] = useState(null); // Para armazenar a URI da imagem
+  const [produtoId, setProdutoId] = useState(null);
 
   useEffect(() => {
     if (route.params?.produto) {
-      const { nome, descricao, quantidade, foto } = route.params.produto;
+      const { _id,nome, descricao, quantidade, foto } = route.params.produto;
+      setProdutoId(_id);
       setNome(nome);
       setDescricao(descricao);
       setQuantidade(quantidade.toString());
@@ -46,7 +48,7 @@ const ProdutosScreen = ({ route, navigation }) => {
     formData.append('descricao', descricao);
     formData.append('quantidade', parseInt(quantidade));
 
-    if (foto) {
+    if (foto && !foto.startsWith('http')) {
 
       const localUri = foto.replace('', '');
       const filename = localUri.split("/").pop();
@@ -62,8 +64,8 @@ const ProdutosScreen = ({ route, navigation }) => {
     }
 
     try {
-      if (route.params?.produto) {
-        await updateProduto(route.params.produto._id, formData);
+      if (produtoId) {
+        await updateProduto(produtoId, formData);
       } else {
         await createProduto(formData);
         console.log(nome,descricao,quantidade,foto);
@@ -88,7 +90,7 @@ const ProdutosScreen = ({ route, navigation }) => {
       <Button title="Selecionar Foto" onPress={pickImage} />
       
       {/* Pré-visualização da foto selecionada */}
-      {foto && <Image source={{ uri: foto }} style={{ width: 200, height: 200, marginTop: 10 }} />}
+      {foto && <Image source={{ uri: foto.startsWith('http') ? foto:foto}} style={{ width: 200, height: 200, marginTop: 10 }} />}
 
       <Button title="Salvar" onPress={handleSubmit} />
     </View>
