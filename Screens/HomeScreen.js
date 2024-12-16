@@ -61,7 +61,7 @@ const HomeScreen = () => {
   };
 
    return (
-    <View>
+    <View style={{flex:1}}>
       {/* Adicionando o título em duas linhas */}
       <View style={styles.header}>
         <Text style={styles.title}>Estoque de Produtos</Text>
@@ -88,7 +88,7 @@ const HomeScreen = () => {
             {item.foto && (
               <Image
                 source={{ uri: `https://gerenciamento-de-produtos-backend.onrender.com${item.foto}` }}
-                style={{ width: 200, height: 200 }}
+                style={{ width: 200, height: 200, marginHorizontal: "auto", marginVertical: 10}}
                 resizeMode="contain"
               />
             )}
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     alignSelf: 'center',
-    marginVertical: 10,
   },
   buttonGroup: {
     flexDirection: 'row',
